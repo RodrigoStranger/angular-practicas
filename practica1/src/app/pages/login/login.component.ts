@@ -9,22 +9,22 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 })
 export class LoginComponent implements OnInit {
   form: FormGroup;
-
   constructor(private readonly fb: FormBuilder) {
     this.form = fb.group({
-      usuario: ['', Validators.required],
-      contrasenia: ['']
+        usuario: ['', Validators.required],
+        contrasenia: ['', Validators.required]
     });
   }
 
   ngOnInit(): void {
-    console.log('=>', this.form.getRawValue());
+    console.log("=>", this.form.getRawValue())
   }
 
-  iniciarSesion() {
-    console.log('=>', this.form.getRawValue());
-    console.log('usuario =>', this.form.controls['usuario'].value);
-    console.log('contrasenia =>', this.form.controls['contrasenia'].value);
-    console.log('->', this.form.valid)
+  iniciarSesion(){
+    console.log("=>", this.form.getRawValue())
+    console.log("usuario =>", this.form.controls['usuario'].value)
+    console.log("contrasenia =>", this.form.controls['contrasenia'].value)
+    console.log("=>", this.form.valid)
   }
+
 }
