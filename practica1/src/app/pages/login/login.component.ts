@@ -10,10 +10,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-
   loginForm: FormGroup;
   isLoading = false;
   generalError: string | null = null;
+  showPassword = false;
 
   constructor(private readonly fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -32,13 +32,16 @@ export class LoginComponent implements OnInit {
     // Opcional: lógica de inicialización
   }
 
-
   get email(): AbstractControl | null {
     return this.loginForm.get('email');
   }
 
   get password(): AbstractControl | null {
     return this.loginForm.get('password');
+  }
+
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 
   handleLogin(): void {

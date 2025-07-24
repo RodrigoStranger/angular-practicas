@@ -27,14 +27,23 @@
 
         <div class="form-group">
           <label for="password">Contraseña</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Ingresa tu contraseña"
-            formControlName="password"
-            class="form-input"
-            [class.input-error]="password?.invalid && password?.touched"
-          />
+          <div class="password-input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Ingresa tu contraseña"
+              formControlName="password"
+              class="form-input"
+              [class.input-error]="password?.invalid && password?.touched"
+            />
+            <i class="bi toggle-password-icon"
+               [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+               (click)="togglePasswordVisibility()"
+               tabindex="0"
+               title="Mostrar/Ocultar contraseña"
+               style="cursor:pointer;"
+            ></i>
+          </div>
           <span
             *ngIf="password?.invalid && password?.touched"
             class="error-message">
