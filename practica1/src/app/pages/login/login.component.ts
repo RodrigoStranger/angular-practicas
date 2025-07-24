@@ -1,30 +1,52 @@
+
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [ReactiveFormsModule, FormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+
+  loginForm: FormGroup;
+  isLoading = false;
+  generalError: string | null = null;
+
   constructor(private readonly fb: FormBuilder) {
-    this.form = fb.group({
-        usuario: ['', Validators.required],
-        contrasenia: ['', Validators.required]
+    this.loginForm = this.fb.group({
+      email: [
+        { value: '', disabled: false },
+        [Validators.required, Validators.email]
+      ],
+      password: [
+        { value: '', disabled: false },
+        [Validators.required, Validators.minLength(3)]
+      ]
     });
   }
 
   ngOnInit(): void {
-    console.log("=>", this.form.getRawValue())
+    // Opcional: lógica de inicialización
   }
 
-  iniciarSesion(){
-    console.log("=>", this.form.getRawValue())
-    console.log("usuario =>", this.form.controls['usuario'].value)
-    console.log("contrasenia =>", this.form.controls['contrasenia'].value)
-    console.log("=>", this.form.valid)
+
+  get email(): AbstractControl | null {
+    return this.loginForm.get('email');
   }
 
+  get password(): AbstractControl | null {
+    return this.loginForm.get('password');
+  }
+
+  handleLogin(): void {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      console.log({ ...this.loginForm.value, result: false });
+      return;
+    }
+    console.log({ ...this.loginForm.value, result: true });
+  }
 }

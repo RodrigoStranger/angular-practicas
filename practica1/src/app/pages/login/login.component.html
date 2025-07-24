@@ -1,21 +1,72 @@
-<div class="row">
-    <div class="col-sm-4">
-    </div>
-    <div class="col-sm-4 mt-5">
-        <div class="row">
-            <form [formGroup]="form" (ngSubmit)="iniciarSesion()">
-                <div class="form-group">
-                    <label for="usuario">Usuario</label>
-                    <input class="form-control" type="text" formControlName="usuario">
-                </div>
-                <div class="form-group">
-                    <label for="contra">contraseña</label>
-                    <input  class="form-control" type="password" formControlName="contrasenia">
-                </div>
-                <div class="mt-2">
-                    <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Iniciar Sesión</button>
-                </div>
-            </form>
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="form-section">
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login-form">
+        <div class="form-header">
+          <h1>Iniciar Sesión</h1>
+          <p>Ingresa tus credenciales para acceder</p>
         </div>
+
+        <div class="form-group">
+          <label for="email">Correo electrónico</label>
+          <input
+            id="email"
+            type="email"
+            placeholder="Ingresa tu correo electrónico"
+            formControlName="email"
+            class="form-input"
+            [class.input-error]="email?.invalid && email?.touched"
+          />
+          <span
+            *ngIf="email?.invalid && email?.touched"
+            class="error-message">
+            <span *ngIf="email?.errors?.['required']">El correo es requerido</span>
+            <span *ngIf="email?.errors?.['email']">Ingresa un correo válido</span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input
+            id="password"
+            type="password"
+            placeholder="Ingresa tu contraseña"
+            formControlName="password"
+            class="form-input"
+            [class.input-error]="password?.invalid && password?.touched"
+          />
+          <span
+            *ngIf="password?.invalid && password?.touched"
+            class="error-message">
+            <span *ngIf="password?.errors?.['required']">La contraseña es requerida</span>
+            <span *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres</span>
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="login-button btn btn-success"
+          [disabled]="isLoading"
+          [class.button-loading]="isLoading"
+        >
+          <span *ngIf="!isLoading">Ingresar</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <div class="spinner"></div>
+            Verificando...
+          </span>
+        </button>
+
+        <div *ngIf="generalError" class="error-message general-error">
+          {{ generalError }}
+        </div>
+      </form>
     </div>
+
+    <div class="brand-section">
+      <div class="brand-content">
+        <h1>¡Bienvenido a (......)</h1>
+        <p>Sistema de (.......)</p>
+      </div>
+    </div>
+  </div>
 </div>
