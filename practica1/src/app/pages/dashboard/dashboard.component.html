@@ -35,6 +35,28 @@
           </div>
         </div>
         <button type="submit" class="btn btn-success w-100">Agregar Estudiante</button>
+
+        <!-- Toast Bootstrap para mensajes -->
+        <div aria-live="polite" aria-atomic="true" class="position-relative">
+          <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1055;">
+            <div *ngIf="successMsg" class="toast align-items-center text-bg-success border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div class="toast-body">
+                  {{ successMsg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close" (click)="successMsg = null"></button>
+              </div>
+            </div>
+            <div *ngIf="errorMsg" class="toast align-items-center text-bg-danger border-0 show" role="alert" aria-live="assertive" aria-atomic="true">
+              <div class="d-flex">
+                <div class="toast-body">
+                  {{ errorMsg }}
+                </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" aria-label="Close" (click)="errorMsg = null"></button>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
     <!-- Tabla a la derecha -->
@@ -47,6 +69,8 @@
             <th>Apellido</th>
             <th>Correo</th>
             <th>Carrera</th>
+            <th>Estado</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -55,6 +79,12 @@
             <td>{{ estudiante.apellido }}</td>
             <td>{{ estudiante.correo }}</td>
             <td>{{ estudiante.carrera }}</td>
+            <td>{{ estudiante.habilitado === 1 ? 'Habilitado' : 'Deshabilitado' }}</td>
+            <td>
+              <button type="button" class="btn btn-sm btn-primary" title="Editar">
+                <i class="bi bi-pencil-square"></i> Editar
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>

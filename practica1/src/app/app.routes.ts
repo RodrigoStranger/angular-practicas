@@ -6,6 +6,5 @@ import { LoginComponent } from './pages/login/login.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 export const routes: Routes = [
     { path: 'login', component: LoginComponent },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'students', component: StudentsComponent },
+    { path: 'dashboard', component: DashboardComponent }
 ];
