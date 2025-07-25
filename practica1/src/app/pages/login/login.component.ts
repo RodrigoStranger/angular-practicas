@@ -29,7 +29,14 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Opcional: lógica de inicialización
+    this.generalError = null;
+    this.loginForm.reset();
+    setTimeout(() => {
+      const emailInput = document.getElementById('email');
+      if (emailInput) {
+        (emailInput as HTMLInputElement).focus();
+      }
+    }, 0);
   }
 
   get email(): AbstractControl | null {
