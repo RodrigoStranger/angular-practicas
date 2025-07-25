@@ -1,63 +1,48 @@
-<div class="container mt-4">
-  <div class="row">
-    <!-- Formulario a la izquierda -->
-    <div class="col-md-5">
+
+<div class="students-wrapper">
+  <div class="students-container">
+    <div class="form-section">
       <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)" class="students-form" novalidate>
-        <div class="form-header mb-3">
-          <h3>Agregar Estudiante</h3>
+        <div class="form-header">
+          <h1>Agregar Estudiante</h1>
+          <p>Completa los datos para registrar un estudiante</p>
         </div>
-        <div class="form-group mb-2">
+
+        <div class="form-group mb-3">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" name="nombre" ngModel required class="form-control" placeholder="Nombre" />
           <div *ngIf="studentForm.submitted && studentForm.controls['nombre']?.invalid" class="text-danger small">
             El nombre es obligatorio.
           </div>
         </div>
-        <div class="form-group mb-2">
+
+        <div class="form-group mb-3">
           <label for="apellido">Apellido</label>
           <input type="text" id="apellido" name="apellido" ngModel required class="form-control" placeholder="Apellido" />
           <div *ngIf="studentForm.submitted && studentForm.controls['apellido']?.invalid" class="text-danger small">
             El apellido es obligatorio.
           </div>
         </div>
-        <div class="form-group mb-2">
+
+        <div class="form-group mb-3">
           <label for="correo">Correo</label>
           <input type="email" id="correo" name="correo" ngModel required email class="form-control" placeholder="Correo electrónico" />
           <div *ngIf="studentForm.submitted && studentForm.controls['correo']?.invalid" class="text-danger small">
             Ingresa un correo válido.
           </div>
         </div>
-        <div class="form-group mb-3">
+
+        <div class="form-group mb-4">
           <label for="carrera">Carrera</label>
           <input type="text" id="carrera" name="carrera" ngModel required class="form-control" placeholder="Carrera" />
           <div *ngIf="studentForm.submitted && studentForm.controls['carrera']?.invalid" class="text-danger small">
             La carrera es obligatoria.
           </div>
         </div>
+
         <button type="submit" class="btn btn-success w-100">Agregar Estudiante</button>
       </form>
     </div>
-    <!-- Tabla a la derecha -->
-    <div class="col-md-7">
-      <h4>Lista de Estudiantes</h4>
-      <table class="table table-striped table-bordered mt-3">
-        <thead class="table-dark">
-          <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Correo</th>
-            <th>Carrera</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let estudiante of estudiantes">
-            <td>{{ estudiante.nombre }}</td>
-            <td>{{ estudiante.apellido }}</td>
-            <td>{{ estudiante.correo }}</td>
-            <td>{{ estudiante.carrera }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <!-- Se eliminó la sección de bienvenida -->
   </div>
 </div>
