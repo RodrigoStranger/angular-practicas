@@ -1,0 +1,222 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Dropdown
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+                </li>
+                <li class="nav-item">
+                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="row mx-5">
+    <div class="card col-sm-3 mt-5">
+        <div class="card-body">
+            <h5 class="card-title">Guardar Estudiante</h5>
+            <div class="row">
+                <form [formGroup]="formEstudiante" (ngSubmit)="guardarEstudiantes()">
+                    <div class="form-group">
+                        <label for="usuario">Nombres</label>
+                        <input class="form-control" type="text" formControlName="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Apellidos</label>
+                        <input  class="form-control" type="text" formControlName="apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Correo</label>
+                        <input  class="form-control" type="email" formControlName="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Carrera</label>
+                        <input  class="form-control" type="text" formControlName="carrera">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Habilitado</label>
+                        <select class="form-control" formControlName="habilitado">
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary" [disabled]="!formEstudiante.valid">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card col-sm-8 mt-5 mx-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellido</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Carrera</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let std of estudiantes; let i = index">
+                    <td> {{i + 1}} </td>
+                    <td> {{std.nombre}} </td>
+                    <td> {{std.apellido}} </td>
+                    <td> {{std.correo}} </td>
+                    <td> {{std.carrera}} </td>
+                    <td *ngIf="std.habilitado == 1">
+                        <a>Habilitado</a>
+                    </td>
+                    <td *ngIf="std.habilitado == 0">
+                        <a>Deshabilitado</a>
+                    </td>
+                    <td>
+                        <button class="btn btn-primary" (click)="obtenerEstudiantes(std.id)" data-bs-toggle="modal" data-bs-target="#editarEstudiante">Editar</button>
+                        <button class="btn btn-danger mx-1" (click)="eliminarEstudiante(std.id)">Eliminar</button>
+                        <button *ngIf="std.habilitado == 0" class="btn btn-succes mx-1" (click)="actualizarEstado(std.id, std.habilitado)">Habilitar</button>
+                        <button *ngIf="std.habilitado == 1" class="btn btn-warning mx-1" (click)="actualizarEstado(std.id, std.habilitado)">Deshabilitar</button>
+                        <button class="btn btn-info mx-1" (click)="mostrarAulas(std.id)" data-bs-toggle="modal" data-bs-target="#agregarAula">Inscribir</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row mx-5">
+    <div class="card col-sm-3 mt-5">
+        <div class="card-body">
+            <h5 class="card-title">Guardar Aulas</h5>
+            <div class="row">
+                <form [formGroup]="formAulas" (ngSubmit)="crearAulas()">
+                    <div class="form-group">
+                        <label for="usuario">Nombre</label>
+                        <input class="form-control" type="text" formControlName="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Código</label>
+                        <input  class="form-control" type="text" formControlName="codigo">
+                    </div>
+                    <div class="mt-2">
+                        <button type="submit" class="btn btn-primary" [disabled]="!formAulas.valid">Registrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="card col-sm-8 mt-5 mx-5">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Código</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let als of aulas; let i = index">
+                    <td> {{i + 1}} </td>
+                    <td> {{als.nombre}} </td>
+                    <td> {{als.codigo}} </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="editarEstudiante" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form [formGroup]="actualizarEstudiante" (ngSubmit)="guardarEstudiantes()">
+                    <div class="form-group">
+                        <label for="usuario">Nombres</label>
+                        <input class="form-control" type="text" formControlName="nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Apellidos</label>
+                        <input  class="form-control" type="text" formControlName="apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Correo</label>
+                        <input  class="form-control" type="email" formControlName="correo">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Carrera</label>
+                        <input  class="form-control" type="text" formControlName="carrera">
+                    </div>
+                    <div class="form-group">
+                        <label for="contra">Habilitado</label>
+                        <select class="form-control" formControlName="habilitado">
+                            <option value="1">Sí</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" (click)="actualizarEstudiantes()" data-bs-dismiss="modal" [disabled]="!actualizarEstudiante.valid">Actualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="agregarAula" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Aulas de Inscripción</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Código</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let als of aulas; let i = index">
+                            <td> {{i + 1}} </td>
+                            <td> {{als.nombre}} </td>
+                            <td> {{als.codigo}} </td>
+                            <td>
+                                <button class="btn btn-primary" (click)="inscribir(als.id)">Inscribir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
