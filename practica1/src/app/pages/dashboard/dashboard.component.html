@@ -4,7 +4,7 @@
     <div class="col-md-5">
       <form #studentForm="ngForm" (ngSubmit)="onSubmit(studentForm)" class="students-form" novalidate>
         <div class="form-header mb-3">
-          <h3>Agregar Estudiante</h3>
+          <h3>{{ editando ? 'Editar Estudiante' : 'Agregar Estudiante' }}</h3>
         </div>
         <div class="form-group mb-2">
           <label for="nombre">Nombre</label>
@@ -34,7 +34,16 @@
             La carrera es obligatoria.
           </div>
         </div>
-        <button type="submit" class="btn btn-success w-100">Agregar Estudiante</button>
+        <div class="form-group mb-3" *ngIf="editando && estudianteEditando">
+          <label for="habilitado">Estado</label>
+          <select id="habilitado" name="habilitado" [ngModel]="estudianteEditando.habilitado" (ngModelChange)="onHabilitadoChange($event)" required class="form-control">
+            <option [ngValue]="1">Habilitado</option>
+            <option [ngValue]="0">Deshabilitado</option>
+          </select>
+        </div>
+        <button type="submit" class="btn w-100" [ngClass]="editando ? 'btn-primary' : 'btn-success'">
+          {{ editando ? 'Actualizar Estudiante' : 'Agregar Estudiante' }}
+        </button>
 
         <!-- Toast Bootstrap para mensajes -->
         <div aria-live="polite" aria-atomic="true" class="position-relative">
@@ -81,7 +90,7 @@
             <td>{{ estudiante.carrera }}</td>
             <td>{{ estudiante.habilitado === 1 ? 'Habilitado' : 'Deshabilitado' }}</td>
             <td>
-              <button type="button" class="btn btn-sm btn-primary" title="Editar">
+              <button type="button" class="btn btn-sm btn-primary" title="Editar" (click)="onEditar(estudiante, studentForm)">
                 <i class="bi bi-pencil-square"></i> Editar
               </button>
             </td>
