@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "nombre": "Laptop Lenovo",
+    "precio": 2300,
+    "descripcion": "Laptop de alto rendimiento con procesador Intel Core i7.",
+    "imagen": "https://via.placeholder.com/200"
+  },
+  {
+    "id": 2,
+    "nombre": "Teclado Mecánico",
+    "precio": 250,
+    "descripcion": "Teclado mecánico RGB para gaming.",
+    "imagen": "https://via.placeholder.com/200"
+  }
+]

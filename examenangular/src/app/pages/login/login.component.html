@@ -1,0 +1,93 @@
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="form-section">
+      <form [formGroup]="loginForm" (ngSubmit)="handleLogin()" class="login-form">
+        <div class="form-header">
+          <h1>Iniciar Sesión</h1>
+          <p>Ingresa tus credenciales para acceder</p>
+        </div>
+
+        <div class="form-group">
+          <label for="usuario">Usuario</label>
+          <input
+            id="usuario"
+            type="text"
+            placeholder="Ingresa tu usuario"
+            formControlName="usuario"
+            class="form-input"
+            [class.input-error]="usuario?.invalid && usuario?.touched && formSubmitted"
+          />
+          <span
+            *ngIf="usuario?.invalid && usuario?.touched && formSubmitted"
+            class="error-message">
+            <span *ngIf="usuario?.errors?.['required']">El usuario es requerido</span>
+            <span *ngIf="usuario?.errors?.['minlength']">El usuario debe tener al menos 3 caracteres</span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <div class="password-input-wrapper">
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              placeholder="Ingresa tu contraseña"
+              formControlName="password"
+              class="form-input"
+              [class.input-error]="password?.invalid && password?.touched && formSubmitted"
+            />
+            <i class="bi toggle-password-icon"
+               [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"
+               (click)="togglePasswordVisibility()"
+               tabindex="0"
+               title="Mostrar/Ocultar contraseña"
+               style="cursor:pointer;"
+            ></i>
+          </div>
+          <span
+            *ngIf="password?.invalid && password?.touched && formSubmitted"
+            class="error-message">
+            <span *ngIf="password?.errors?.['required']">La contraseña es requerida</span>
+            <span *ngIf="password?.errors?.['minlength']">La contraseña debe tener al menos 3 caracteres</span>
+          </span>
+        </div>
+
+        <button
+          type="submit"
+          class="login-button btn btn-success"
+          [disabled]="isLoading"
+          [class.button-loading]="isLoading"
+        >
+          <span *ngIf="!isLoading">Ingresar</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <div class="spinner"></div>
+            Verificando...
+          </span>
+        </button>
+      </form>
+    </div>
+
+    <div class="brand-section">
+      <div class="brand-content">
+        <h1>¡Bienvenido a la miniaplicación Angular!</h1>
+        <p>Sistema de productos, usuarios y roles.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Toast de error - Fuera del formulario para mejor posicionamiento -->
+<div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 9999;">
+  <div
+    *ngIf="showToast"
+    class="toast show"
+    role="alert"
+    aria-live="assertive"
+    aria-atomic="true"
+    style="min-width: 300px;"
+  >
+    <div class="toast-body">
+      Usuario o contraseña incorrectos
+    </div>
+  </div>
+</div>
